@@ -1,0 +1,252 @@
+CREATE DATABASE ENGINEERING_PROJECTS;
+USE ENGINEERING_PROJECTS;
+
+
+CREATE TABLE `engineering_projects`.`projects` (
+  `P_ID` INT NOT NULL,
+  `PROJECT_NAME` VARCHAR(60) NOT NULL,
+  `Date_of_completion` DATE NOT NULL,
+  PRIMARY KEY (`P_ID`));
+
+
+INSERT INTO `engineering_projects`.`projects` (`P_ID`, `PROJECT_NAME`, `Date_of_completion`) VALUES ('1', 'supertech', '2021/11/01');
+INSERT INTO `engineering_projects`.`projects` (`P_ID`, `PROJECT_NAME`, `Date_of_completion`) VALUES ('2', 'amrapali', '2022/02/10');
+INSERT INTO `engineering_projects`.`projects` (`P_ID`, `PROJECT_NAME`, `Date_of_completion`) VALUES ('3', 'pragati maidan', '2022/11/22');
+INSERT INTO `engineering_projects`.`projects` (`P_ID`, `PROJECT_NAME`, `Date_of_completion`) VALUES ('4', 'supernova', '2021/12/28');
+
+select * from engineering_projects.projects;
+
+
+CREATE TABLE `engineering_projects`.`engineers` (
+  `E_ID` INT NOT NULL,
+  `NAME` VARCHAR(45) NOT NULL,
+  `DESIGNATION` VARCHAR(60) NOT NULL,
+  `SALARY` INT NOT NULL,
+  `Contact_Info` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`E_ID`));
+
+
+
+INSERT INTO `engineering_projects`.`engineers` (`E_ID`, `NAME`, `DESIGNATION`, `SALARY`, `Contact_Info`) VALUES ('1', 'Doo', 'Structural Engineer', '2500000', '09356712345');
+INSERT INTO `engineering_projects`.`engineers` (`E_ID`, `NAME`, `DESIGNATION`, `SALARY`, `Contact_Info`) VALUES ('2', 'Bell', 'Design Engineer', '2000000', '06781239034');
+INSERT INTO `engineering_projects`.`engineers` (`E_ID`, `NAME`, `DESIGNATION`, `SALARY`, `Contact_Info`) VALUES ('3', 'Tyyr', 'Site Engineer', '2200000', '08566567882');
+INSERT INTO `engineering_projects`.`engineers` (`E_ID`, `NAME`, `DESIGNATION`, `SALARY`, `Contact_Info`) VALUES ('4', 'Quoo', 'Design Engineer', '1800000', '09980998121');
+
+
+
+CREATE TABLE `engineering_projects`.`site` (
+  `site_id` INT NOT NULL,
+  `Location` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`site_id`));
+
+
+INSERT INTO `engineering_projects`.`site` (`site_id`, `Location`) VALUES ('1', 'NOIDA');
+INSERT INTO `engineering_projects`.`site` (`site_id`, `Location`) VALUES ('2', 'GREEN PARK');
+INSERT INTO `engineering_projects`.`site` (`site_id`, `Location`) VALUES ('3', 'TILAK LANE');
+INSERT INTO `engineering_projects`.`site` (`site_id`, `Location`) VALUES ('4', 'OKHLA');
+
+SELECT * FROM engineering_projects.site;
+
+
+CREATE TABLE `engineering_projects`.`partners` (
+  `company_id` INT NOT NULL,
+  `company_name` VARCHAR(70) NOT NULL,
+  `contact` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`company_id`));
+
+
+INSERT INTO `engineering_projects`.`partners` (`company_id`, `company_name`, `contact`) VALUES ('4', 'Ultratech Groups', '26587645');
+INSERT INTO `engineering_projects`.`partners` (`company_id`, `company_name`, `contact`) VALUES ('3', 'Govt. Of India', '');
+INSERT INTO `engineering_projects`.`partners` (`company_id`, `company_name`, `contact`) VALUES ('2', 'Amrapali Groups', '6447448902');
+INSERT INTO `engineering_projects`.`partners` (`company_id`, `company_name`, `contact`) VALUES ('1', 'Ultratech Groups', '22909191');
+
+
+SELECT * FROM engineering_projects.partners;
+
+
+
+CREATE TABLE `engineering_projects`.`stock` (
+  `Stock_id` INT NOT NULL,
+  `MATERIALS` VARCHAR(200) NULL,
+  `TRANSPORTATION` VARCHAR(200) NULL,
+  PRIMARY KEY (`Stock_id`));
+
+
+ALTER TABLE `engineering_projects`.`stock` 
+ADD COLUMN `STATUS` VARCHAR(100) NULL AFTER `TRANSPORTATION`;
+
+
+INSERT INTO `engineering_projects`.`stock` (`Stock_id`, `MATERIALS`, `TRANSPORTATION`, `STATUS`) VALUES ('1', 'cement', 'available', 'required-ordered');
+INSERT INTO `engineering_projects`.`stock` (`Stock_id`, `MATERIALS`, `TRANSPORTATION`, `STATUS`) VALUES ('2', 'bricks', 'not available', 'full');
+INSERT INTO `engineering_projects`.`stock` (`Stock_id`, `MATERIALS`, `TRANSPORTATION`, `STATUS`) VALUES ('3', 'tin sheets', 'not available', 'required-not ordered');
+
+
+SELECT * FROM engineering_projects.stock;
+
+
+CREATE TABLE `engineering_projects`.`service providers` (
+  `s_id` INT NOT NULL,
+  `S_NAME` VARCHAR(100) NOT NULL,
+  `SERVICE` VARCHAR(250) NOT NULL,
+  PRIMARY KEY (`s_id`));
+
+
+
+CREATE TABLE `engineering_projects`.`employees` (
+  `EMPLOYEE_ID` INT NOT NULL,
+  `EMPLOYEE_NAME` VARCHAR(60) NOT NULL,
+  `EMPLOYEE_DESIGNATION` VARCHAR(200) NOT NULL,
+  `EMPLOYEE_SALARY` INT NOT NULL,
+  `EMPLOYEE_CONTACT` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`EMPLOYEE_ID`));
+
+
+
+INSERT INTO `engineering_projects`.`employees` (`EMPLOYEE_ID`, `EMPLOYEE_NAME`, `EMPLOYEE_DESIGNATION`, `EMPLOYEE_SALARY`, `EMPLOYEE_CONTACT`) VALUES ('1', 'TRE', 'SITE SUPERVISER', '70000', '09809678921');
+INSERT INTO `engineering_projects`.`employees` (`EMPLOYEE_ID`, `EMPLOYEE_NAME`, `EMPLOYEE_DESIGNATION`, `EMPLOYEE_SALARY`, `EMPLOYEE_CONTACT`) VALUES ('2', 'GRU', 'CONTRACTOR', '100000', '07563824748');
+INSERT INTO `engineering_projects`.`employees` (`EMPLOYEE_ID`, `EMPLOYEE_NAME`, `EMPLOYEE_DESIGNATION`, `EMPLOYEE_SALARY`, `EMPLOYEE_CONTACT`) VALUES ('3', 'POLWE', 'LABOUR', '40000', '06676345938');
+INSERT INTO `engineering_projects`.`employees` (`EMPLOYEE_ID`, `EMPLOYEE_NAME`, `EMPLOYEE_DESIGNATION`, `EMPLOYEE_SALARY`, `EMPLOYEE_CONTACT`) VALUES ('4', 'JUGS', 'LABOUR', '40000', '08743657593');
+
+
+SELECT * FROM engineering_projects.employees;
+
+
+ALTER TABLE `engineering_projects`.`engineers` 
+ADD COLUMN `site_id` INT NULL AFTER `Contact_Info`;
+
+
+ALTER TABLE `engineering_projects`.`projects` 
+ADD COLUMN `E_ID` INT NULL AFTER `Date_of_completion`,
+ADD COLUMN `EMPLOYEE_ID` INT NULL AFTER `E_ID`,
+ADD COLUMN `company_id` INT NULL AFTER `EMPLOYEE_ID`,
+ADD COLUMN `s_id` INT NULL AFTER `company_id`,
+ADD COLUMN `STOCK_ID` INT NULL AFTER `s_id`;
+
+
+
+ALTER TABLE `engineering_projects`.`partners` 
+CHANGE COLUMN `company_id` `COMPANY_ID` INT NOT NULL ,
+CHANGE COLUMN `company_name` `COMPANY_NAME` VARCHAR(70) NOT NULL ,
+CHANGE COLUMN `contact` `CONTACT` VARCHAR(20) NOT NULL ;
+
+
+
+ALTER TABLE `engineering_projects`.`service providers` 
+CHANGE COLUMN `s_id` `S_ID` INT NOT NULL ;
+
+
+
+ALTER TABLE `engineering_projects`.`site` 
+CHANGE COLUMN `site_id` `SITE_ID` INT NOT NULL ;
+
+
+
+ALTER TABLE `engineering_projects`.`stock` 
+CHANGE COLUMN `Stock_id` `STOCK_ID` INT NOT NULL ;
+
+
+ALTER TABLE `engineering_projects`.`engineers` 
+DROP COLUMN `site_id`;
+
+
+
+ALTER TABLE `engineering_projects`.`engineers` 
+ADD COLUMN `SITE_ID` INT NULL AFTER `Contact_Info`;
+
+
+
+ALTER TABLE `engineering_projects`.`engineers` 
+ADD INDEX `SITE_ID` (`SITE_ID` ASC) VISIBLE;
+;
+
+
+
+ALTER TABLE `engineering_projects`.`engineers` 
+ADD CONSTRAINT `SITE_ID_FK`
+  FOREIGN KEY (`SITE_ID`)
+  REFERENCES `engineering_projects`.`site` (`SITE_ID`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+
+
+ALTER TABLE `engineering_projects`.`projects` 
+CHANGE COLUMN `company_id` `COMPANY_ID` INT NULL DEFAULT NULL ,
+CHANGE COLUMN `s_id` `SERVICE_ID` INT NULL DEFAULT NULL ;
+
+
+
+ALTER TABLE `engineering_projects`.`projects` 
+ADD INDEX `ENGINEER_ID` (`E_ID` ASC) INVISIBLE,
+ADD INDEX `EMPLOYEE_ID` (`EMPLOYEE_ID` ASC) VISIBLE,
+ADD INDEX `COMPANY_ID` (`COMPANY_ID` ASC) VISIBLE,
+ADD INDEX `SERVICE_ID` (`SERVICE_ID` ASC) VISIBLE,
+ADD INDEX `STOCK_ID` (`STOCK_ID` ASC) VISIBLE;
+;
+
+
+
+ALTER TABLE `engineering_projects`.`projects` 
+CHANGE COLUMN `E_ID` `ENGINEER_ID` INT NULL DEFAULT NULL ;
+
+
+
+
+ALTER TABLE `engineering_projects`.`projects` 
+ADD CONSTRAINT `ENGINEER_ID`
+  FOREIGN KEY (`ENGINEER_ID`)
+  REFERENCES `engineering_projects`.`engineers` (`E_ID`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+
+
+ALTER TABLE `engineering_projects`.`projects` 
+ADD CONSTRAINT `EMPLOYEE_ID`
+  FOREIGN KEY (`EMPLOYEE_ID`)
+  REFERENCES `engineering_projects`.`employees` (`EMPLOYEE_ID`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+ADD CONSTRAINT `COMPANY_ID`
+  FOREIGN KEY (`COMPANY_ID`)
+  REFERENCES `engineering_projects`.`partners` (`COMPANY_ID`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+ADD CONSTRAINT `SERVICE_ID`
+  FOREIGN KEY (`SERVICE_ID`)
+  REFERENCES `engineering_projects`.`service providers` (`S_ID`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+ADD CONSTRAINT `STOCK_ID`
+  FOREIGN KEY (`STOCK_ID`)
+  REFERENCES `engineering_projects`.`stock` (`STOCK_ID`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+
+ALTER TABLE `engineering_projects`.`projects` 
+CHANGE COLUMN `P_ID` `P_ID` INT NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `engineering_projects`.`site` 
+CHANGE COLUMN `SITE_ID` `SITE_ID` INT NOT NULL AUTO_INCREMENT ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
